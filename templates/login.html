@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block style %}
+    {{ super() }}
+    <style>
+        main{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        form{
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            box-shadow: 1px 1px 10px 1px rgba(71, 71, 71, 0.689);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            gap: 0.7em;
+            font-size: 1.2em;
+        }
+
+        .group{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 0.2em;
+        }
+
+        .group label{
+            color: tomato;
+        }
+
+        .group input{
+            width: 100%;
+            height: 30px;
+            border-radius: 4px;
+            padding: 3px;
+            border: none;
+            border: 1px solid lightgrey;
+            outline: none;
+        }
+
+        .group input:focus{
+            border: 2px solid rgba(197, 197, 197, 0.689);
+            transition: all ease-in 0.1s;
+        }
+
+        form input[type='submit']{
+            width: 100%;
+            max-width: 200px;
+            border: none;
+            outline: none;
+            height: 30px;
+            border-radius: 8px;
+            color: #fff;
+            background-color: tomato;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        form input[type='submit']:hover, form input[type='submit']:focus{
+            background-color: rgba(244, 62, 30, 0.878);
+            transition: all ease-in-out 0.1s;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" id="myForm">
+        <div class="group">
+            <label for="phone">Phone</label>
+            <input type="tel" name="phone" id="phone" placeholder="(225)0101010101">
+        </div>
+        <div class="group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="#password">
+        </div>
+        <input type="submit" value="Login" id="btnS">
+    </form>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    <script>
+        let form = document.querySelector('#myForm')
+    let btn = document.querySelector('#btnS')
+    var obj = {};
+	
+    btn.addEventListener('click', function(e){
+        e.preventDefault();
+
+        var formData = new FormData(form);
+        for (var key of formData.keys()) {
+            obj[key] = formData.get(key);
+        }
+        
+        console.log(formData, obj)
+        $.post('login', obj, function(result){
+            console.log(result)
+        })
+        
+    })
+    </script>
+{% endblock %}

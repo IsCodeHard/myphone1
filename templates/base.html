@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>{% if title %}{{ title }}{% else %}AMITEST{% endif %}</title>
+    {% block style %}
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Roboto, Poppins, 'Arial Black', serif;
+        }
+
+        body, html{
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column;
+            background: #ECE9E6;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #FFFFFF, #f5f5f5);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #FFFFFF, #f3f3f3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        main{
+            flex-grow: 1;
+        }
+
+        header{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 25px;
+            align-items: center;
+        }
+
+        header ul{
+            display: flex;
+            min-width: 300px;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+        header ul li{
+            padding:5px
+        }
+
+        header a{
+            color: tomato;
+            font-size: 1.7em;
+            text-decoration: none;
+        }
+
+        header a:hover{
+            color: rgb(240, 55, 22);
+            transition: all ease-in-out 0.2s;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+    <header>
+        {% if login %}
+            <a href="">Asterisk AMI</a>
+            <ul class="menu">
+                <li><a href="{{url_for('profil')}}">Profil</a></li>
+                <li><a href="{{url_for('account')}}">Account</a></li>
+                <li><a href="{{url_for('contact')}}">Contact</a></li>
+                <li><a href="{{url_for('refill')}}">Refill</a></li>
+                <li><a href="{{url_for('logout')}}">LogOut</a></li>
+            </ul>
+        {% else %}
+            <a href="">Asterisk AMI</a>
+            <ul class="menu">
+                <li><a href="{{url_for('login')}}">Login</a></li>
+                <li><a href="{{url_for('register')}}">Register</a></li>
+            </ul>
+        {% endif %}
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+
+    </footer>
+    {% block script %}
+    {% endblock %}
+</body>
+</html>
