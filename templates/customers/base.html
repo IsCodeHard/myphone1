@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c0dfab195c.js" crossorigin="anonymous" defer></script>
+    <title>{% block title %} AAMI-Dashboard {% endblock %}</title>
+    {% block style %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all ease-in-out 0.1s;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            font-family: Gwen-trial, sans-serif;
+        }
+
+        body {
+            background-color: #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 10px 0px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+            padding: 3px;
+        }
+
+        header {
+            background-color: #fff;
+            min-height: 50px;
+            display: flex;
+            justify-content: space-evenly;
+            color: grey;
+        }
+
+        .logo,
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu {
+            min-width: 50%;
+            gap: 5px;
+        }
+
+        .menu a {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            flex-grow: 1;
+            color: grey;
+            text-decoration: none;
+        }
+
+        .menu a:hover {
+            color: gray;
+            background-color: rgb(220, 220, 220);
+        }
+
+        .menu a i {
+            font-size: 20px;
+        }
+
+        .solde {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2em;
+            margin: 0 auto;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .call_info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 1em;
+            color: #bbb;
+        }
+
+        .call_info a{
+            text-decoration: none;
+        }
+
+        .five_rcall,
+        .five_rcontact {
+            padding: 5px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px 2px #dadada;
+        }
+
+        .contacts,
+        .callers {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            padding: 12px;
+        }
+
+        .contacts .contact,
+        .callers .caller {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            padding: 5px;
+            background-color: #eee;
+            min-height: 50px;
+            align-items: center;
+            border-radius: 5px;
+            color: gray;
+            font-family: Roboto, sans-serif;
+        }
+
+        .contacts a:hover .contact, .callers a:hover .caller{
+            background-color: #ccc;
+        }
+
+        .call_list{
+            position: relative;
+            background-color: #fff;
+            box-shadow: 1px 1px 5px 2px rgb(220, 220, 220);
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            width: 100%;
+            font-family: Poppins;
+            max-height: 76vh;
+            overflow-y: scroll;
+            padding-top: 3px;
+        }
+
+        .call_list a{
+            text-decoration: none;
+        }
+
+        .call_list .contact{
+            display: flex;
+            color: gray;
+            width: 100%;
+            max-width: 400px;
+            justify-content: space-evenly;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            align-items: center;
+        }
+
+        .call_list a:hover .contact{
+            background-color: #ccc;
+        }
+
+        .title{
+            text-align: center;
+            font-size: 2em;
+            color: grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap:0.3em
+        }
+
+        .title i{
+            scale: 1.2;
+            color: rgb(27, 27, 242);
+            transition: all ease-in-out 0.2s;
+        }
+
+        .title i:hover{
+            font-size: 1.4em;
+            color: rgb(49, 49, 250);
+            cursor: pointer;
+            text-shadow: 1px 1px 5px #a1a1a1;
+        }
+
+        #myForm{
+            position: sticky;
+            top: -3px;
+            display: flex;
+            color: gray;
+            width: 100%;
+            max-width: 500px;
+            justify-content: space-evenly;
+            margin: 0 auto;
+            background-color: #eee;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 1px 1px 5px 2px #cfcfcf;
+        }
+
+        #myForm .formBx, .formBx input{
+            height: 100%;
+            width: 100%;
+        }
+
+        #myForm .formBx{
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .formBx i{
+            font-size: 1.2em;
+            left: 10px;
+            background-color: #ddd;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .formBx i:hover{
+            background-color: #bbb;
+        }
+
+        .formBx input{
+            height: 35px;
+            padding: 10px;
+            padding-left: 10px;
+            border-radius: 5px 0px 0px 5px;
+            border: 1px solid #eee;
+            outline: none;
+        }
+
+        .call_btn{
+            font-size: 1.4rem;
+            background-color: #ccc;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .call_btn:hover{
+            color: rgb(1, 84, 1);
+            scale: 1.5;
+            transition: all ease-in-out 0.2s;
+        }
+
+        @media screen and (max-width: 800px) {
+            .call_info {
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                width: 100%;
+            }
+
+            .five_rcall,
+            .five_rcontact {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            main {
+                padding: 10px;
+            }
+        }
+    </style>
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <i class="fa-brands fa-phoenix-squadron"></i>
+            <h4>AAMI-Dashboard</h4>
+        </div>
+        <nav class="menu">
+            <a href="{{url_for('dashboard')}}" title="dashbord"><i class="fa-solid fa-gauge-high"></i></a>
+            <a href="{{url_for('contacts')}}" title="contact"><i class="fa-regular fa-address-book"></i></a>
+            <a href="{{url_for('calls')}}" title="call list"><i class="fa-solid fa-phone-volume"></i></a>
+            <a href="{{url_for('account')}}" title="account"><i class="fa-solid fa-wallet"></i></a>
+            <a href="{{url_for('parameters')}}" title="settings"><i class="fa-solid fa-gears"></i></a>
+            <a href="{{url_for('logout')}}" title="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        </nav>
+    </header>
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+    <footer>
+
+    </footer>
+</body>
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+{% endblock %}
+</html>

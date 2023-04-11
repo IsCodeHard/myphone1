@@ -1,0 +1,152 @@
+{% extends 'customers/base.html' %}
+{% block style %}
+    {{super()}}
+    <style>
+    </style>
+{% endblock %}
+
+{% block main %}
+<h3 class="title"><span>Contacts</span><a href="{{url_for('addcontact')}}"><i class="fa-solid fa-square-plus"></a></i></h3>
+        <div class="call_list">
+            <form action="" method="post" id="myForm">
+                <div class="formBx">
+                  <input type="search" name="search" id="search">
+                <i class="fa-solid fa-magnifying-glass"></i>  
+                </div>
+                
+            </form>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Gf Arsène</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Jaheim</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Jm the M</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Kabson</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Maman1</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Maman2</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Ma voisine</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Miss Affou</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Miss Konan</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Mr Rameau</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Mr Sam</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Nicole</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Papa</p>
+                    <p class="number">(225)0101010101</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+            <a href="contact.html">
+                <div class="contact">
+                    <i class="fa-regular fa-user"></i>
+                    <p class="name">Parfait</p>
+                    <p class="number">(225)0101010102</p>
+                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                </div>
+            </a>
+        </div>
+{% endblock %}
+
+{% block script %}
+    {{super()}}
+    <script>
+        let calls = document.querySelectorAll(".call_btn")
+    calls.forEach((element)=>{
+        element.addEventListener('click', function(e){
+            e.preventDefault()
+            const phoneNumberElement = this.parentElement.querySelector(".number");
+            const contactNameElement = this.parentElement.querySelector(".name");
+
+            // Get the text content of the phone number element
+            const phoneNumber = phoneNumberElement.textContent.trim();
+            const contactName = contactNameElement.textContent.trim();
+
+            // Do something with the phone number value
+            console.log(contactName, phoneNumber);
+        })
+    })
+    </script>
+{% endblock %}

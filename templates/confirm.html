@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block style %}
+    {{super()}}
+    <style>
+        form .group .inputbx{
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .fa-eye-slash{
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            transition: all ease-in-out 0.2s;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+{{super()}}
+<form action="" id="myForm">
+    <h3 style="text-align: center;">Asterisk AMI - Validation</h3>
+    <hr>
+    <div class="group">
+        <label for="phone">Phone</label>
+        <input type="tel" name="phone" id="phone" placeholder="(225)0101010101">
+    </div>
+    <div class="group">
+        <label for="code">Code</label>
+        <input type="text" name="code" id="code" placeholder="AAMI-0000">
+    </div>
+    <input type="submit" value="Validate" id="submit">
+</form>
+{% endblock %}
+
+{% block script %}
+    {{super()}}
+    <script>
+    </script>
+{% endblock %}

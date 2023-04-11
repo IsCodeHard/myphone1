@@ -1,0 +1,225 @@
+{% extends 'customers/base.html' %}
+{% block style %}
+    {{super()}}
+    <style>
+        main {
+            flex-grow: 1;
+            padding: 10px 0px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+            padding: 3px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main .msg{
+            width: fit-content;
+            max-width: 600px;
+            padding: 5px;
+            min-height: 40px;
+            border-radius: 5px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .error{
+            background-color: red;
+        }
+
+        .success{
+            background-color: rgb(76, 218, 41);
+        }
+
+        form{
+            background-color: #fff;
+            box-shadow: 1px 2px 10px 3px #919191d9;
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            color: tomato;
+        }
+
+        form .group{
+            display: flex;
+            flex-direction: column;
+            gap: 0.2em;
+            padding: 5px;
+        }
+
+        form .group label{
+            font-size: 1.3em;
+        }
+
+        form .group input{
+            height: 40px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            outline: none;
+            font-family: Roboto;
+            width: 100%;
+        }
+
+        form .group .inputbx{
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .fa-eye-slash{
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            transition: all ease-in-out 0.2s;
+        }
+
+        form .group input:focus{
+            border: 1px solid tomato;
+        }
+
+        input#submit{
+            outline: none;
+            border: none;
+            background-color: tomato;
+            padding: 10px;
+            color: #fff;
+            font-size: 1.3em;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        input#submit:hover{
+            background-color: rgb(240, 72, 43);
+            box-shadow: 1px 3px 5px 3px #ccc;
+        }
+
+        #removeaccount{
+            background-color: red;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 1px 2px 5px 2px #cecdcd;
+        }
+
+        #removeaccount:hover{
+            font-weight: bold;
+            scale: 1.2;
+            box-shadow: 1px 3px 6px 3px #c3c2c2;
+        }
+
+        .btn{
+            border: none;
+            outline: none;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .btn-danger{
+            background-color: red;
+        }
+
+        .btn-success{
+            background-color: green;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+<div class="msg">
+</div>
+<form action="" id="form">
+    <h3 style="text-align: center;">Change password</h3>
+    <hr>
+    <div class="group">
+        <label for="opassword">Old password</label>
+        <input type="password" name="opassword" id="opassword" placeholder="**********" required>
+    </div>
+    <div class="group">
+        <label for="password">New password</label>
+        <div class="inputbx">
+            <input type="password" name="password" id="password" placeholder="**********" required>
+            <i class="fa-regular fa-eye-slash" id="eye"></i>
+        </div>
+    </div>
+    <div class="group">
+        <label for="cpassword">Retype new password</label>
+        <input type="password" name="cpassword" id="cpassword" placeholder="**********" required>
+    </div>
+    <input type="submit" value="Update password" id="submit">
+</form>
+<a href="#" id="removeaccount" title="delete your account">Delete Account</a>
+{% endblock %}
+
+{% block script %}
+    {{super()}}
+    <script>
+    document.querySelector('#eye').addEventListener('click',function(){
+        document.querySelector('#eye').classList.toggle('fa-eye')
+
+        if(document.querySelector('#eye').classList.contains('fa-eye')){
+            document.querySelector("#password").type="text"
+        }else{
+            document.querySelector("#password").type="password"
+        }
+    })
+
+    document.querySelector("#removeaccount").addEventListener('click', function(e){
+        e.preventDefault()
+
+        const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+    title: 'Are you sure?',
+    text: "This action is irreversible!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+    reverseButtons: true
+    }).then((result) => {
+    if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire(
+        'Deleted!',
+        'Your account has been deleted.',
+        'success'
+        )
+    } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+    ) {
+        swalWithBootstrapButtons.fire(
+        'Cancelled',
+        )
+    }
+    })
+
+    })
+    
+</script>
+{% endblock %}

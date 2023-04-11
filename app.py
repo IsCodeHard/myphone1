@@ -1,76 +1,117 @@
-from flask import Flask, render_template, url_for, redirect, request, jsonify
-import pymysql.cursors
+from flask import Flask, render_template, url_for, redirect, request, jsonify, session
+import pymysql
+from Class import *
 
-# Connect to the database
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='',
-                             database='amidb',
-                             cursorclass=pymysql.cursors.DictCursor)
+db = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='',
+    db='myphone',
+    charset='utf8mb4',
+    cursorclass=pymysql.cursors.DictCursor
+)
 
 
 app=Flask(__name__)
+app.secret_key = 'my_secret_key'
 
-@app.route('/')
+user = User(db)
+
+
+#print(user.register("Fabien Brou", "(225)0153148864", "fabienbrou"))
+
+@app.errorhandler(404)
+def page_not_found(error):
+    # Renvoyer une page de template personnalisée
+    return render_template('errors/page_not_found.html'), 404
+
+@app.route('/',  methods=['POST','GET'])
 def home():
-    return render_template('index.html')
+    print(session)
+    return render_template('login.html')
 
 @app.route('/register', methods=['POST','GET'])
 def register():
     error = []
     if request.method == 'POST':
-        data = request.form
-
-        if not 'phone' in data or data['phone'] == "" or len(data['phone'].strip()) < 8:
-            error.append("phone can't be empty")
-            
-        if not 'fullname' in data or data['fullname'] == "" or len(data['fullname'].strip()) < 5:
-            error.append("fullname can't be empty")
-            
-        if not 'password' in data or data['password'] == "" or len(data['password'].strip()) < 8:
-            error.append("password can't be empty")
-            
-        if error:
-            return jsonify(dict(success=False, msg=error))
-        
-        with connection.cursor() as cursor:
-            sql = "SELECT * FROM `users` WHERE phone=%s"
-            cursor.execute(sql, (data['phone'],))
-            result = cursor.fetchone()
-            
-            if not result:
-                sql = "INSERT INTO users(fullname,phone,account,password) VALUES (%s,%s)"
-                cursor.execute(sql, (data['fullname'],data['phone'],500,data['password']))
-                connection.commit()
-                return "success"
-            else:
-                return "user phone already exist"
+        pass
     return render_template('register.html')
+
+@app.route('/confirm', methods=['POST','GET'])
+def confirm():
+    error = []
+    if request.method == 'POST':
+        pass
+    return render_template('confirm.html')
 
 @app.route('/login', methods=['POST','GET'])
 def login():
+    error = []
+    if request.method == 'POST':
+        posted = request.form
+    
+        result = user.login(posted['phone'], posted['password'])
+        if result['success']:
+            session['AAMI_ID'] = result['data']['id']
+            return redirect(url_for('dashboard'))
+        print(result)
     return render_template('login.html')
 
-@app.route('/profil', methods=['POST','GET'])
-def profil():
-    return render_template('profil.html')
+@app.route('/dashboard')
+def dashboard():
+    if not user.select_by_public_id(session.get('AAMI_ID')):
+            return redirect(url_for('home'))
+
+    return render_template('customers/index.html')
+
+@app.route('/parameters', methods=['POST','GET'])
+def parameters():
+    if not user.select_by_public_id(session.get('AAMI_ID')):
+            return redirect(url_for('home'))
+
+    error = []
+    if request.method == 'POST':
+        pass
+    return render_template('customers/parameters.html')
 
 @app.route('/account')
 def account():
-    return render_template('account.html')
+    if not user.select_by_public_id(session.get('AAMI_ID')):
+            return redirect(url_for('home'))
 
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
+    return render_template('customers/account.html')
 
-@app.route('/refill', methods=['POST','GET'])
-def refill():
-    return render_template('refill.html')
+@app.route('/contacts')
+def contacts():
+    if not user.select_by_public_id(session.get('AAMI_ID')):
+            return redirect(url_for('home'))
 
-@app.route('/call/<phone>', methods=['POST'])
-def call(phone):
-    return render_template('call.html')
+    return render_template('customers/contacts.html')
 
-@app.route('/logout', methods=['GET'])
-def logout(phone):
+@app.route('/newcontact', methods=['GET', 'POST'])
+def addcontact():
+    if not user.select_by_public_id(session.get('AAMI_ID')):
+            return redirect(url_for('home'))
+
+    error = []
+    if request.method == 'POST':
+        pass
+    return render_template('customers/addcontact.html')
+
+@app.route('/calls')
+def calls():
+    if not user.select_by_public_id(session.get('AAMI_ID')):
+            return redirect(url_for('home'))
+
+    return render_template('customers/calls.html')
+
+@app.route('/logout')
+def logout():
+    if not user.select_by_public_id(session.get('AAMI_ID')):
+            return redirect(url_for('home'))
+
+    session.pop('AAMI_ID', None)
     return redirect(url_for('home'))
+
+if __name__ == '__main__':
+    app.run()  
