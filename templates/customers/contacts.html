@@ -15,118 +15,20 @@
                 </div>
                 
             </form>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Gf Arsène</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Jaheim</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Jm the M</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Kabson</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Maman1</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Maman2</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Ma voisine</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Miss Affou</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Miss Konan</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Mr Rameau</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Mr Sam</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Nicole</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Papa</p>
-                    <p class="number">(225)0101010101</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
-            <a href="contact.html">
-                <div class="contact">
-                    <i class="fa-regular fa-user"></i>
-                    <p class="name">Parfait</p>
-                    <p class="number">(225)0101010102</p>
-                    <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
-                </div>
-            </a>
+            {% if contacts %}
+                {% for contact in contacts %}
+                <a href="contact.html">
+                    <div class="contact">
+                        <i class="fa-regular fa-user"></i>
+                        <p class="name">{{contact.fullname}}</p>
+                        <p class="number">{{contact.phone}}</p>
+                        <i class="fa-solid fa-phone-volume call_btn" style="color:green"></i>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <center><p>Aucun contact ajouter pour l'instant</p></center>
+            {% endif %}
         </div>
 {% endblock %}
 

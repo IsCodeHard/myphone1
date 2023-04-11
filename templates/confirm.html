@@ -19,7 +19,8 @@
 
 {% block main %}
 {{super()}}
-<form action="" id="myForm">
+<p class="info"></p>
+<form action="" id="myForm" method="post">
     <h3 style="text-align: center;">Asterisk AMI - Validation</h3>
     <hr>
     <div class="group">
@@ -36,6 +37,24 @@
 
 {% block script %}
     {{super()}}
-    <script>
+     <script>
+        let form = document.querySelector('#myForm')
+        let btn = document.querySelector('#submit')
+        var obj = {};
+	
+    btn.addEventListener('click', function(e){
+        e.preventDefault();
+
+        var formData = new FormData(form);
+        for (var key of formData.keys()) {
+            obj[key] = formData.get(key);
+        }
+        console.log(obj)
+        $.post('confirm', obj, function(result){
+            if(result.succes=true){
+                    window.location.href = "/login"
+                }
+            })
+    })
     </script>
 {% endblock %}

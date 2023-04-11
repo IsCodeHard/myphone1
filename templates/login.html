@@ -26,5 +26,23 @@
 {% block script %}
     {{super()}}
     <script>
+        let form = document.querySelector('#myForm')
+        let btn = document.querySelector('#submit')
+        var obj = {};
+	
+    btn.addEventListener('click', function(e){
+        e.preventDefault();
+
+        var formData = new FormData(form);
+        for (var key of formData.keys()) {
+            obj[key] = formData.get(key);
+        }
+        console.log(obj)
+        $.post('login', obj, function(result){
+            if(result.succes=true){
+                window.location.href = "/dashboard"
+                }
+            })
+    })
     </script>
 {% endblock %}

@@ -14,11 +14,16 @@
             cursor: pointer;
             transition: all ease-in-out 0.2s;
         }
+
+        .errorpass{
+            border: 1px solid tomato !important;
+        }
     </style>
 {% endblock %}
 
 {% block main %}
 {{super()}}
+<p class="info"></p>
 <form action="" id="myForm">
     <h3 style="text-align: center;">Asterisk AMI - SignUp</h3>
     <hr>
@@ -58,4 +63,37 @@
         }
     })
     </script>
+    <script>
+    let form = document.querySelector('#myForm')
+    let btn = document.querySelector('#submit')
+    var obj = {};
+	
+    btn.addEventListener('click', function(e){
+        e.preventDefault();
+
+        var formData = new FormData(form);
+        for (var key of formData.keys()) {
+            obj[key] = formData.get(key);
+        }
+        
+        if(obj["password"] != obj["cpassword"]){
+            document.querySelector("#password").classList.add('errorpass')
+            document.querySelector("#cpassword").classList.add('errorpass')
+            alert("Passwords don't match")
+        }else{
+            document.querySelector("#password").classList.remove('errorpass')
+            document.querySelector("#cpassword").classList.remove('errorpass')
+
+            console.log(formData, obj)
+            $.post('register', obj, function(result){
+                console.log(result)
+                if(result.succes=true){
+                    document.querySelector(".info").innerHTML=result.msg
+                }
+            })
+        }
+        
+    })
+    
+</script>
 {% endblock %}
